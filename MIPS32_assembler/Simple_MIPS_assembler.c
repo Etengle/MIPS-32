@@ -2,8 +2,8 @@
  * About Author: 
  	College:		NTHU 
 	Major: 			Department of Mathematics
-	Double major: 	Department of Computer Science
-	Student ID: 	101021120 
+	Double major: 		Department of Computer Science
+	Student ID: 		101021120 
 	Name: 			Yu Xiang, Zheng
 	Nickname: 		Slighten
 	E-mail: 		zz687@yahoo.com.tw
