@@ -60,13 +60,13 @@ INTRODUCTION
 USING METHOD
 ============
 
-	 Untar the "MIPS_single_cycle_simulator.tar.gz" in your environment, 
+	 Untar the "MIPS32_single_cycle_simulator.tar.gz" in your environment, 
 	make, and then execute.
 	 If you are in Unix or Cygwin this kind of Unix like environment
 	in Windows, type the following commands:
 
-	% tar zxvf MIPS_single_cycle_simulator.tar.gz
-	% cd archi01/simulator
+	% tar zxvf MIPS32_single_cycle_simulator.tar.gz
+	% cd MIPS32_single_cycle_simulator/simulator
 	% make
 	% ./single_cycle
 	(or "%./single_cycle.exe" in some environments)
