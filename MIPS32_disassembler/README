@@ -1,0 +1,169 @@
+~~~~~~~~~~~~~~~~~~~~~~~~
+Simple MIPS Disassembler
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+AUTHOR
+======
+	
+	College:		NTHU 
+	Major: 			Department of Mathematics
+	Double major: 	Department of Computer Science
+	Student ID: 	101021120 
+	Name: 			Yu Xiang, Zheng
+	Nickname: 		Slighten
+	E-mail: 		zz687@yahoo.com.tw
+	FB: 			https://www.facebook.com/Slighten.Zheng
+	Cellphone: 		0923576510
+
+INTRODUCTION
+============
+
+	 This simple MIPS disassembler is writen by C language and is a simpler version 
+	than the real one.
+	 I translate some MIPS instructions (all 32-bit) on this disassembler including 
+	following opcodes:
+	 1. R-type: 
+	 	"add", "sub", "and", "or", "xor", "nor", "nand", "slt",
+		"sll", "srl", "sra", "jr".
+	 2. I-type: 
+	 	"addi", "lw", "lh", "lhu", "lb", "lbu", "sw", "sh",
+		"sb", "lui", "andi", "ori", "nori", "slti", "beq", "bne".
+	 3. J-type:
+	 	"j", "jal".
+	 4. S-type:
+	 	"halt".
+	 Note that I don't translate ALL MIPS instructions, just all above.
+	 (No floating point instructions, no "sltiu", and so on.)
+
+	 There are some testcases you can test.
+	 
+USING METHOD
+============
+
+	 Untar the "MIPS32_disasm.tar.gz" in your environment, make, and then 
+	execute.
+	 If you are in Unix or Cygwin this kind of Unix like environment
+	in Windows, type the following commands:
+
+	% tar zxvf MIPS32_asem.tar.gz
+	% cd archi01/simulator
+	% make
+	% ./disasm
+	(or "%./disasm.exe" in some environments like Windows)
+
+	 and it will generate "result.S".
+	Note that you should have the "dimage.bin" and "iimage.bin" in the same directory 
+	as your "disasm".
+
+
+
+INPUT FORMAT
+============
+
+	 The input file "iimage.bin" is the binary format of instructions of 1KB.
+	The content of "iimage.bin" is in little-endian and in the order of following:
+
+				the starting address of PC (4 Bytes) --> 
+		the amount of words of following instructions (4 Bytes) --> 
+				the body of instructions (n bytes)
+
+	 The input file "dimage.bin" format should be the order of following:
+
+				the starting address of $sp (4 Bytes) --> 
+				the amount of words of following data (4 Bytes) --> 
+				the content of data (n bytes)
+
+OUTPUT FORMAT
+=============
+
+	 The output file name is "result.S".
+	 The content of you input file is like this: 
+
+	 			.ORG 0x00000000 # $sp = 0x00000003, wc_instr = 67, wc_data = 2
+				and  $10, $11, $10
+				sll  $11, $11, 1 
+				bne  $0 , $10, -3    
+				addi $10, $10, 7     	# 0x00000007
+				lui  $11, -32768		# 0xFFFF8000
+							.
+							.
+							.
+
+	 where ".ORG" and "sp" is the starting address of the program counter and the $sp register, and "wc" means word count. Below the first line, remains are 
+	 assembly code.
+
+BUGS
+====
+
+	 None.
+	 If you find some other bugs, then I sincerely hope you can 
+	contact me by FB ,or e-mail me, or call me directly. Thanks for you help!
+
+COPYRIGHT
+=========
+	
+	Copyright (C) 2014 by Slighten. All rights reserved.
+
+FAQs
+====
+
+	Q: What is this software used for?
+	 A: A MIPS disassembler which translates the machine language back to MIPS assembly 
+	 	language.
+	
+	Q: What is MIPS and what is machine language?
+	 A: Look it up in your textbook or google it.
+	
+	Q: Why can't I "make"?
+	 A: You should have some related compiler tools in your system first, like gcc. (GNU 	C compiler). Also, you should have had "make" utility in your environment.
+	
+	Q: Why I typed "./a.out" or "./a.exe" but it shows me an error?
+	 A: We generate the executable file that names "disasm", so you should key in 
+	 	"disasm" instead of "./a.out" or "./a.exe".
+	
+	Q: Why I typed "disasm" but still have error?
+	 A: You may try to type "./disasm filename.S" as I said.
+	
+	Q: Why I call "cat" to see "iimage.bin" but what I see is a garbled text?
+	 A: It's normal, since ".bin" file contains binary data, 
+	 	and you should type "xxd image.bin" or "hexdump image.bin" or "vim –b image.bin" and in Vim, type ":%!xxd". (if you haven't had "xxd" or "hexdump" utility or "Vim editor" yet, please install them first)
+	
+	Q: How do I verify if the result is correct?
+	 A: Do "diff" with the result from the real MIPS disassembler or you can
+	 	use my assembler to assemble it again back to your machine language.
+	
+	Q: Ok, I do it right, and then?
+	 A: You can use my MIPS simulator to simulate it.
+
+	 Congratulations! You made it. If you like it, sincerely please to donate or I won't
+	have enough money to rent a small little room for myself to live in next semester. ~TAT~ 
+	
+	If you have other problems, just contact me ASAP and I will answer you.^^
+
+THANKS
+======
+	
+	1. The respectable professor Pai H. Chou & Ren-Song Tsay
+	2. Teammates, and great TAs
+	3. The books 
+	 (1) /Introduction to computing systems - from bits & gates to C & beyond (2E)/ by Yale N. Patt and Sanjay J. Patel 
+	 (2) /Computer Organization and Design - The hardware/software interface/ by David A. Patterson & John L. Hennessy 
+	4. Google search engine
+	
+CHANGELOG
+=========
+
+	None
+
+TODO
+====
+
+	Make a single cycle simulator with caches.
+
+OTHER WORKS
+===========
+	
+	LC3 disassembler, LC3 assembler, MIPS assembler, 
+	MIPS single cycle simulator, MIPS pipelined simulator
+	(This two is my projects from my computer architecture class,
+	Due to this, I can only put the object file but not source code.)
