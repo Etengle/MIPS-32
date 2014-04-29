@@ -1,0 +1,164 @@
+~~~~~~~~~~~~~~~~~~~~~
+Simple MIPS Simulator
+~~~~~~~~~~~~~~~~~~~~~
+
+AUTHOR
+======
+	
+	1.
+	NTHU 
+	Department of Mathematics
+	Department of Computer Science
+	Student ID: 101021120 
+	Name: Yu Xiang, Zheng
+	Nickname: Slighten
+	E-mail: zz687@yahoo.com.tw
+	FB: https://www.facebook.com/Slighten.Zheng
+	Cellphone number: 0923576510
+
+	2.
+	Harbin Institute of Technology
+	Department of Computer Science
+	Student ID: x1022108
+	Name: S.Jie Cao
+	E-mail: caoshijie0501@gmail.com
+	FB: https://www.facebook.com/profile.php?id=100007780840056
+	Cellphone number: 0979480528
+	
+INTRODUCTION
+============
+
+	 This simple MIPS simulator inputs "dimage.bin" and "iimage.bin"
+	and outputs "snapshot.rpt" and "error_dump.rpt" where "dimage.bin" is the binary code of data of 1KB in little-endian,  "iimage.bin" is the binary code of instructions of 1KB in little-endian, "snapshot.rpt" is the result of simulating, and "error_dump.rpt" contains the errors.(if occurred)
+
+	 This simple MIPS simulator is a simpler version than the real one.
+	We simulate some MIPS instructions (all 32-bit) on this simulator including following opcodes:
+	 1. R-type: 
+	 	"add", "sub", "and", "or", "xor", "nor", "nand", "slt",
+		"sll", "srl", "sra", "jr".
+	 2. I-type: 
+	 	"addi", "lw", "lh", "lhu", "lb", "lbu", "sw", "sh",
+		"sb", "lui", "andi", "ori", "nori", "slti", "beq", "bne".
+	 3. J-type:
+	 	"j", "jal".
+	 4. S-type:
+	 	"halt".
+	 Note that we don't simulate ALL MIPS instructions, just all above.
+	 (No floating point instructions, no "sltiu", and so on.)
+
+	 We also handle some errors including following:
+	  1. Binary files cannot be read in. (terminate)
+	  2. Cannot allocate dynamic memory. (terminate)
+	  3. Write $0 error in cycle. 
+	  	 (skip this cycle and continue to simulate)
+	  4. Number overflow in cycle.
+	     (Still simulate)
+	  5. Address overflow in cycle. (terminate)
+	  6. Misalignment error in cycle. (terminate)
+	 If any one of all above errors occur we will warn you.( 1~2 on screen, 3~6 in error_dump.rpt)
+
+USING METHOD
+============
+
+	 Untar the "MIPS_single_cycle_simulator.tar.gz" in your environment, 
+	make, and then execute.
+	 If you are in Unix or Cygwin this kind of Unix like environment
+	in Windows, type the following commands:
+
+	% tar zxvf MIPS_single_cycle_simulator.tar.gz
+	% cd archi01/simulator
+	% make
+	% ./single_cycle
+	(or "%./single_cycle.exe" in some environments)
+
+	and it will generate "snapshot.rpt" and  "error_dump.rpt".
+	Note that you should have the "dimage.bin" and "iimage.bin" in the same directory as your "single_cycle".
+
+	 As I said, your "dimage.bin" and "iimage.bin" are the binary code 
+	of data and instructions of 1KB in little-endian.
+	 The format of "dimage.bin" should be the order of following:
+
+				the starting address of $sp (4 Bytes) --> 
+				the amount of words of following data (4 Bytes) --> 
+				the body of data (n bytes)
+	 
+	 The format of "iimage.bin" should be the order of following:
+
+				the starting address of PC (4 Bytes) --> 
+		the amount of words of following instructions (4 Bytes) --> 
+				the body of instructions (n bytes)
+	 
+	 There are some test cases in the folder "testcase" tou can try.
+	 You can type "diff snapshot.rpt ~/Correct/snapshot.rpt" to see if 
+	they are identical. (where "~/Correct/snapshot.rpt" is the path of the correct result simulated by TAs golden simulator) 
+	
+	Note: If you want to see every words in hex IR, I have put the testing "fprintf" or "printf" in some the functions in .c file, you can use it just by deleting the comment notation "/*" "*/", and then you can compare it if it's your ideal result.
+
+BUGS
+====
+		
+	 I have checked it detailedly, so it should have had bare bugs. 
+	However, if you find some bugs, then I sincerely hope you can contact me by FB ,or e-mail me, or call me directly. Thanks for you help!
+
+COPYRIGHT
+=========
+	
+	Copyright (C) 2014 by Slighten. All rights reserved.
+
+FAQs
+====
+
+	Q: What is this software used for?
+	 A: A MIPS simulator which simulates the MIPS format machine codes and shoe its result.
+	
+	Q: What is MIPS and what is machine language?
+	 A: Look it up in your textbook or google it.
+	
+	Q: Why can't I "make"?
+	 A: You should have some related compiler tools in your system first, like gcc. (GNU C compiler). Also, you should have had "make" utility in your environment.
+	
+	Q: Why I typed "./a.out" or "./a.exe" but it shows me an error?
+	 A: We generate the executable file that names "single_cycle", so you should key in "single_cycle" instead of "./a.out" or "./a.exe".
+	
+	Q: Why I typed "single_cycle" but still have error?
+	 A: You may try to type "./single_cycle".
+	
+	Q: Why I typed "cat" to see "dimage.bin" and "iimage.bin" but what I see is a garbled text?
+	 A: It's normal, since ".bin" file contains binary data, 
+	 and you should type "xxd image.bin" or "hexdump image.bin" or "vim –b image.bin" and in Vim, type ":%!xxd". (if you haven't had "xxd" or "hexdump" utility or "Vim editor" yet, please install them first)
+	
+	Q: How do I verify if the result is correct?
+	 A: Do "diff" with the result from the correct one.
+	
+	Q: Ok, I do it right, and then?
+	 A: Congratulations! You made it. If you like it, sincerely please to donate or I won't have enough money to rent a small little room for myself to live in next semester. ~TAT~ 
+	
+	If you have other problems, just contact me ASAP and I will answer you.^^
+
+THANKS
+======
+	
+	1. The respectable professor Pai H. Chou & Ren-Song Tsay
+	2. Teammates, and great TAs
+	3. The books 
+	 (1) /Introduction to computing systems - from bits & gates to C & beyond (2E)/ by Yale N. Patt and Sanjay J. Patel 
+	 (2) /Computer Organization and Design - The hardware/software interface/ by David A. Patterson & John L. Hennessy 
+	4. Google
+	
+CHANGELOG
+=========
+
+	None
+
+TODO
+====
+
+	Make a pipelined MIPS simulator.
+
+OTHER WORKS
+===========
+	
+	LC3 disassembler, LC3 assembler, MIPS assembler, 
+	MIPS disassembler, MIPS pipelined simulator
+	(This one is my projects from my computer architecture class,
+	Due to this, I can only put the object file but not source code.)

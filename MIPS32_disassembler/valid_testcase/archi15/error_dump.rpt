@@ -1,0 +1,11 @@
+Write $0 error in cycle: 5
+Number overflow in cycle: 5
+Number overflow in cycle: 6
+Number overflow in cycle: 7
+Write $0 error in cycle: 15
+Number overflow in cycle: 17
+Number overflow in cycle: 19
+Write $0 error in cycle: 24
+Number overflow in cycle: 24
+Address overflow in cycle: 24
+Misalignment error in cycle: 24

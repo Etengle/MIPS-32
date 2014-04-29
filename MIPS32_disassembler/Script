@@ -1,0 +1,11 @@
+#!/bin/bash
+echo start!
+#rm iimage.bin dimage.bin result.S
+#make clean
+#make
+cp valid_testcase/archi$1/iimage.bin .
+cp valid_testcase/archi$1/dimage.bin .
+./disasm
+mv result.S valid_testcase/archi$1/.
+rm iimage.bin dimage.bin
+echo success!
