@@ -1,4 +1,10 @@
 MIPS-32
 =======
 
-MIPS-32_tools including assembler, disassembler, and single_cycle simulator
+    MIPS-32 tools, including assembler, disassembler, and single cycle simulator
+
+TO be upload
+============
+
+    1. Pipelined simulator
+    2. Single cycle simulator with virtual memory realization
