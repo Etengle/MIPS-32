@@ -3,7 +3,7 @@ MIPS-32
 
     MIPS-32 tools, including assembler, disassembler, and single cycle simulator
 
-TO be uploaded
+To be uploaded
 ==============
 
     1. Pipelined simulator
