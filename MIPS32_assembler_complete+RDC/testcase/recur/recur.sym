@@ -1,0 +1,6 @@
+// Symbol table for "testcase/recur/recur.S"
+// Scope level 0:
+//      Symbol table       Page Address (decimal)
+//      -----------------  ----------------------
+//      sumToN             0676
+//      recur              0692

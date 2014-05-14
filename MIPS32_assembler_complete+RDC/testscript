@@ -1,0 +1,36 @@
+#!/bin/bash
+echo Start!
+make clean
+make
+echo 1.01
+./asem testcase/01/01.S
+diff iimage.bin testcase/01/iimage.bin
+echo ...end
+echo 2.02
+./asem testcase/02/02.S
+diff iimage.bin testcase/02/iimage.bin
+echo ...end
+echo 3.branch
+./asem testcase/branch/branch.S
+diff iimage.bin testcase/branch/iimage.bin
+echo ...end
+echo 4.error2
+./asem testcase/error2/error_2.S
+diff iimage.bin testcase/error2/iimage.bin
+echo ...end
+echo 5.fib_dp
+./asem testcase/fib_dp/fib_dp.S
+diff iimage.bin testcase/fib_dp/iimage.bin
+echo ...end
+echo 6.func
+./asem testcase/func/func.S
+diff iimage.bin testcase/func/iimage.bin
+echo ...end
+echo 7.recur
+./asem testcase/recur/recur.S
+diff iimage.bin testcase/recur/iimage.bin
+echo ...end
+
+make clean
+rm *.bin *.S
+echo Done!

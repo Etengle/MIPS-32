@@ -1,0 +1,7 @@
+// Symbol table for "testcase/fib_dp/fib_dp.S"
+// Scope level 0:
+//      Symbol table       Page Address (decimal)
+//      -----------------  ----------------------
+//      else               0360
+//      loop               0372
+//      end                0400
