@@ -1,5 +1,5 @@
 #
-# Makefile for Architecture Project 1
+# Makefile for MIPS-32 assembler_complete
 #
 
 CC=cc

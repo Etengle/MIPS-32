@@ -1,4 +1,4 @@
-/* Simple MIPS-32 assembler
+/* Simple MIPS-32 assembler_complete
  * About Author: 
  	College:		NTHU 
 	Major: 			Department of Mathematics
