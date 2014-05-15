@@ -7,6 +7,7 @@ To be uploaded
 ==============
     Soon:
         1. Pipelined simulator
-        2. Single cycle simulator with virtual memory realization
+        2. Single cycle simulator with virtual memory realization (cashe, PTE, TLB, hardrive implementation)
+    
     After this semester:
         All simulators' source code.
