@@ -1,10 +1,10 @@
 // Symbol table for "testcase/branch/branch.S"
 // Scope level 0:
-//      Symbol table       Page Address (decimal)
-//      -----------------  ----------------------
-//      x_0_else           0556
-//      x_not_0            0564
-//      x_1_1              0592
-//      x_1_2_b            0600
-//      x_1_3              0620
-//      end                0624
+//      Symbol table       Page Address (dec/hex)
+//      -----------------  -----------------------
+//      x_0_else           0556      /      0x022C
+//      x_not_0            0564      /      0x0234
+//      x_1_1              0592      /      0x0250
+//      x_1_2_b            0600      /      0x0258
+//      x_1_3              0620      /      0x026C
+//      end                0624      /      0x0270

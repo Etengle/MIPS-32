@@ -1,4 +1,4 @@
-/* Simple MIPS-32 assembler_complete+RDC
+/* Simple MIPS-32 assembler
  * About Author: 
  	College:		NTHU 
 	Major: 			Department of Mathematics

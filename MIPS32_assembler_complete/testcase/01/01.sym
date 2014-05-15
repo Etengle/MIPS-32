@@ -1,4 +1,5 @@
 // Symbol table for "testcase/01/01.S"
 // Scope level 0:
-//      Symbol table       Page Address (decimal)
-//      -----------------  ----------------------
+//      Symbol table       Page Address (dec/hex)
+//      -----------------  -----------------------
+//      _main              0512      /      0x0200

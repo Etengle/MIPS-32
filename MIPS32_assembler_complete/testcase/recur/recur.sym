@@ -1,6 +1,6 @@
 // Symbol table for "testcase/recur/recur.S"
 // Scope level 0:
-//      Symbol table       Page Address (decimal)
-//      -----------------  ----------------------
-//      sumToN             0676
-//      recur              0692
+//      Symbol table       Page Address (dec/hex)
+//      -----------------  -----------------------
+//      sumToN             0676      /      0x02A4
+//      recur              0692      /      0x02B4

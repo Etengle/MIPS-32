@@ -223,7 +223,8 @@ void EnterInstrOrData(int data, char *label){
 	}
 	else ErrorMsg_halt(1); 
 	M_index++;
-	PC += 4;
+	if (M_index != 1)
+		PC += 4;
 }
 
 void Enter_R_instr(int opcode, int rs, int rt, int rd, int shamt, int funct){
@@ -448,15 +449,15 @@ void WriteSymbolFile(char *name){
 	fprintf(fhsym, 
 			   "// Symbol table for \"%s.S\"\n"
 		       "// Scope level 0:\n"
-		       "//      %-*s  Page Address (decimal)\n"
+		       "//      %-*s  Page Address (dec/hex)\n"
 		       "//      ", name, cmp, "Symbol table");
 	for (i = 0 ; i < cmp ; i++){
 		fprintf(fhsym,"-");
 	}
-	fprintf(fhsym, "  ----------------------\n");
+	fprintf(fhsym, "  -----------------------\n");
 	for (i = 0 ; i < MAX_SIZE ; i++){
 		if(LabelStruct[i].line != 0)
-			fprintf(fhsym,"//      %-*s  %04hi\n", cmp, LabelStruct[i].name, (LabelStruct[i].address-2)*4 + Progstart);
+			fprintf(fhsym,"//      %-*s  %04hi      /      0x%04hX\n", cmp, LabelStruct[i].name, LabelStruct[i].address, LabelStruct[i].address);
 	}
 	fclose(fhsym);
 }
@@ -529,7 +530,7 @@ int FirstPass(FILE *fh, char *name){
 						if (Word_buffer_ORIGIN[strlen(Word_buffer_ORIGIN) - 1] == ':')
 						Word_buffer_ORIGIN[strlen(Word_buffer_ORIGIN) - 1] = '\0';
 						strcpy(LabelStruct[Label_index].name, Word_buffer_ORIGIN);
-						LabelStruct[Label_index].address = M_index;
+						LabelStruct[Label_index].address = PC;
 						LabelStruct[Label_index].line = linenum;
 						LabelStruct[Label_index].length =  strlen(Word_buffer_ORIGIN);
 						for (i = 0; i < Label_index; i++){
@@ -572,9 +573,9 @@ int SecondPass(FILE *fh, char* endian){
 		for(j = 0; LabelStruct[j].line != 0; j++){
 			if(!strcmp(labelArray[i], LabelStruct[j].name)){
 				if(JF[i] == 1)
-						mem[i] = (mem[i] & 0xfc000000) | (((4*LabelStruct[j].address + Progstart) >> 2) - 2); 
+						mem[i] = (mem[i] & 0xfc000000) | (LabelStruct[j].address >> 2); 
 				else
-						mem[i] = (mem[i] & 0xffff0000) | (LabelStruct[j].address - (i + 1));
+						mem[i] = (mem[i] & 0xffff0000) | ((LabelStruct[j].address - (i-1)*4 - Progstart) >> 2);
 				break;			
 			}
 		}
