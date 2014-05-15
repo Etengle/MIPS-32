@@ -5,6 +5,8 @@ MIPS-32
 
 To be uploaded
 ==============
-
-    1. Pipelined simulator
-    2. Single cycle simulator with virtual memory realization
+    Soon:
+        1. Pipelined simulator
+        2. Single cycle simulator with virtual memory realization
+    After this semester:
+        All simulators' source code.
