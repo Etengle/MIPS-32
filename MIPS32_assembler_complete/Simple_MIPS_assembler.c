@@ -174,11 +174,7 @@ void ClearAllArg(){
 }
 
 void SkipSpaceAndComma(int* offset, FILE *fh){
-	for ( ; Line_buffer[*offset] == ' ' || Line_buffer[*offset] == '	' || Line_buffer[*offset] == ',' || 
-		Line_buffer[*offset] == '(' || Line_buffer[*offset] == ')'; (*offset)++){
-	}
-	//printf("line: %d '%c'\n", linenum, Line_buffer[*offset]);
-	if (Line_buffer[*offset] < 32){
+	if (Line_buffer[*offset] == '\0' || Line_buffer[*offset] == '\n' || Line_buffer[*offset] == '#'){
 		if (fgets(Line_buffer, MAX_LEN - 1, fh) != NULL){
 			CmpStruct = initStruct;
 			linenum++;
@@ -188,6 +184,18 @@ void SkipSpaceAndComma(int* offset, FILE *fh){
 			SkipSpaceAndComma(&argoffset, fh);
 		}
 	}
+	else{			
+			for ( ;Line_buffer[*offset] && Line_buffer[*offset] <= ' ' ; (*offset)++){
+		}
+			if(Line_buffer[*offset] == '\0' || Line_buffer[*offset] == '\n' || Line_buffer[*offset] == '#')
+				SkipSpaceAndComma(offset, fh);
+			if(Line_buffer[*offset] == ',' || Line_buffer[*offset] == '(' || Line_buffer[*offset] == ')' ){
+				(*offset) += 1;
+				SkipSpaceAndComma(offset, fh);
+			}
+	}
+	//printf("line: %d '%c'\n", linenum, Line_buffer[*offset]);
+	
 }
 
 void Scanning_imm_label(int *num, int ZipCode, FILE *fh){
@@ -469,16 +477,17 @@ int FirstPass(FILE *fh, char *name){
 		CmpStruct = initStruct;
 		linenum++;
 		ClearAllArg();
+		//printf("%d: %s\n", linenum, Line_buffer);
 		//check if fgets too many words
 		if(Line_buffer[strlen(Line_buffer)] != '\0') ErrorMsg_halt(3);
 		while(sscanf(Line_buffer + argsave, "%s%n", Word_buffer, &argoffset) == 1){
-			//printf("line: %d %s\n", linen, Word_buffer);
 			argoffset += argsave;
 			// comment, skip this line
 			strcpy(Word_buffer_ORIGIN, Word_buffer);
 			LowerCase(Word_buffer);
 			SkipSpaceAndComma(&argoffset, fh);
-			if (Word_buffer[0] == '#' || Word_buffer[0] == '\n' || Word_buffer[0] == '\0') break;
+			//printf("line: %d %s\n", linenum, Word_buffer);
+			if (Word_buffer[0] == '#' || Word_buffer[0] == '\n' || Word_buffer[0] == '\0') {break;}
 			/* scan */
 			for (i = 0; i < R_num; i++){
 				if (!strcmp(opcode_R[i], Word_buffer)){CmpStruct.op_r = i;}
@@ -573,9 +582,9 @@ int SecondPass(FILE *fh, char* endian){
 		for(j = 0; LabelStruct[j].line != 0; j++){
 			if(!strcmp(labelArray[i], LabelStruct[j].name)){
 				if(JF[i] == 1)
-						mem[i] = (mem[i] & 0xfc000000) | (LabelStruct[j].address >> 2); 
+						mem[i] = (mem[i] & 0xfc000000) | (0x3ffffff & (LabelStruct[j].address >> 2)); 
 				else
-						mem[i] = (mem[i] & 0xffff0000) | ((LabelStruct[j].address - (i-1)*4 - Progstart) >> 2);
+						mem[i] = (mem[i] & 0xffff0000) | (0xffff & ((LabelStruct[j].address - (i-1)*4 - Progstart) >> 2));
 				break;			
 			}
 		}
