@@ -1,0 +1,17 @@
+#!/bin/bash
+echo start...
+#tar zxvf valid_testcase.tar.gz
+cd simulator
+#make clean
+#make
+#rm iimage.bin dimage.bin snapshot.rpt error_dump.rpt
+#for (( i=1; i <= 50; i=i+1))
+#do
+	cp ../valid_testcase/archi$1/dimage.bin .
+	cp ../valid_testcase/archi$1/iimage.bin . 
+	./pipeline
+	diff snapshot.rpt ../valid_testcase/archi$1/snapshot.rpt
+	diff error_dump.rpt ../valid_testcase/archi$1/error_dump.rpt
+ 	#	rm iimage.bin dimage.bin snapshot.rpt error_dump.rpt
+#done
+echo ...success
