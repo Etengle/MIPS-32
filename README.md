@@ -6,7 +6,7 @@ MIPS-32
     2. assembler + RDC
     3. disassembler
     4. single cycle simulator ( no source code )
-    2. pipelined simulator
+    2. pipelined simulator ( no source code )
 
 To be uploaded
 ==============
