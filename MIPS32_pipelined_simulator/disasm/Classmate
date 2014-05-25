@@ -1,0 +1,7 @@
+#!/bin/bash
+echo start...
+cp ../valid_testcase/archi$1/dimage.bin .
+cp ../valid_testcase/archi$1/iimage.bin . 
+./disasm
+cp result.S ../valid_testcase/archi$1/.
+echo ...success
