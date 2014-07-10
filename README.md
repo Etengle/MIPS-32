@@ -3,15 +3,12 @@ MIPS-32
 
     MIPS-32 tools, including:
     1. assembler
-    2. assembler + RDC
+    2. assembler + RDC ( random don't care )
     3. disassembler
-    4. single cycle simulator ( no source code )
-    2. pipelined simulator ( no source code )
+    4. single cycle simulator
+    5. pipelined simulator
+    6. CMP simulator ( Cache, Memory, Pagetable entries )
 
 To be uploaded
 ==============
-    Soon:
-        Single cycle simulator with virtual memory realization (L1 cache, PTE, TLB, hard drive implementation)
-    
-    After this semester:
-        All simulators' source code.
+    None
