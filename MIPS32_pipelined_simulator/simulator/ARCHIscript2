@@ -8,6 +8,7 @@ tar zxvf student_rpt.tar.gz
 cd simulator
 make clean
 make
+rm *.rpt *.bin
 echo 1.pipeline1
 cp  ../open_testcase/pipeline1/iimage.bin .
 cp  ../open_testcase/pipeline1/dimage.bin .
@@ -83,7 +84,7 @@ echo ...end
 
 
 make clean
-rm snapshot.rpt error_dump.rpt dimage.bin iimage.bin
+rm *.rpt *.bin
 cd ..
 rm -rf open_testcase
 rm -rf hidden_testcase

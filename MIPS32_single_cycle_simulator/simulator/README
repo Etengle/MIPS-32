@@ -49,30 +49,31 @@ INTRODUCTION
 	 We also handle some errors including following:
 	  1. Binary files cannot be read in. (terminate)
 	  2. Cannot allocate dynamic memory. (terminate)
-	  3. Write $0 error in cycle. 
+	  3. File size is not a multiplication of 4. (terminate)
+	  4. Write $0 error in cycle. 
 	  	 (skip this cycle and continue to simulate)
-	  4. Number overflow in cycle.
+	  5. Number overflow in cycle.
 	     (Still simulate)
-	  5. Address overflow in cycle. (terminate)
-	  6. Misalignment error in cycle. (terminate)
-	 If any one of all above errors occur we will warn you.( 1~2 on screen, 3~6 in error_dump.rpt)
+	  6. Address overflow in cycle. (terminate)
+	  7. Misalignment error in cycle. (terminate)
+	 If any one of all above errors occur we will warn you.(1~3 on screen, 4~7 in error_dump.rpt)
 
 USING METHOD
 ============
 
-	 Untar the "MIPS32_single_cycle_simulator.tar.gz" in your environment, 
-	make, and then execute.
+	 Untar the "archi01.tar.gz" in your environment, make, and then 
+	execute.
 	 If you are in Unix or Cygwin this kind of Unix like environment
 	in Windows, type the following commands:
 
-	% tar zxvf MIPS32_single_cycle_simulator.tar.gz
-	% cd MIPS32_single_cycle_simulator/simulator
+	% tar zxvf archi01.tar.gz
+	% cd archi01/simulator
 	% make
 	% ./single_cycle
 	(or "%./single_cycle.exe" in some environments)
 
 	and it will generate "snapshot.rpt" and  "error_dump.rpt".
-	Note that you should have the "dimage.bin" and "iimage.bin" in the same directory as your "single_cycle".
+	Note that you should have the "dimage.bin" and "iimage.bin" in the same directory as you "single_cycle".
 
 	 As I said, your "dimage.bin" and "iimage.bin" are the binary code 
 	of data and instructions of 1KB in little-endian.
@@ -154,11 +155,3 @@ TODO
 ====
 
 	Make a pipelined MIPS simulator.
-
-OTHER WORKS
-===========
-	
-	LC3 disassembler, LC3 assembler, MIPS assembler, 
-	MIPS disassembler, MIPS pipelined simulator
-	(This one is my projects from my computer architecture class,
-	Due to this, I can only put the object file but not source code.)

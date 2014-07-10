@@ -1,6 +1,6 @@
-~~~~~~~~~~~~~~~~~~~~~~~~
-Pipelined MIPS Simulator
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+CMP MIPS Simulator
+~~~~~~~~~~~~~~~~~~~~~
 
 AUTHOR
 ======
@@ -19,23 +19,22 @@ AUTHOR
 	2.
 	Harbin Institute of Technology
 	Department of Computer Science
-	Student ID: x1022108
-	Name: S.Jie Cao
-	E-mail: caoshijie0501@gmail.com
-	FB: https://www.facebook.com/profile.php?id=100007780840056
-	Cellphone number: 0979480528
+	Student ID: 		x1022108
+	Name: 				S.Jie Cao
+	E-mail: 			caoshijie0501@gmail.com
+	FB: 				https://www.facebook.com/profile.php?id=100007780840056
+	Cellphone number:	0979480528
 	
 INTRODUCTION
 ============
+		This CMP(cache, memory, PTE) MIPS simulator is a single cycle simulator with virtual memory 
+	implementation, which has both I(instruction) & D(data) TLB(Table Lookaside Buffer), PTE(Page Table Entry), hard drive, memory and L1 cache. Every address number is virtual, need to check out TLB to see if data in memory or hard drive. If TLB misses, check out PTE and do same thing, and so forth. 
+	(Note that this project actually virtual address equal to physical address, no need to translation.)
 
-	 	This pipelined MIPS simulator inputs "dimage.bin" and "iimage.bin"
-	and outputs "snapshot.rpt" and "error_dump.rpt" where "dimage.bin" is the binary code of data of 1KB in little-endian,  "iimage.bin" is the binary code of instructions of 1KB in little-endian, "snapshot.rpt" is the result of simulating, and "error_dump.rpt" contains the errors.(if occurred)
+	 	This CMP MIPS simulator inputs "dimage.bin" and "iimage.bin" and outputs "snapshot.rpt" and 
+	"report.rpt" where "dimage.bin" is the binary code of data of 1KB in little-endian,  "iimage.bin" is the binary code of instructions of 1KB in little-endian, "snapshot.rpt" is the result of simulation, and "report.rpt" enumerate the numbers of ICache, DCache, ITLB, DTLB, IPTE, DPTE hits and misses.
 
-	 	Unlike last one (Simple MIPS simulator), which is basically single cycle 
-	simulation, this pipelined MIPS simulator is pipelined simulation.
-	 	The difference between single cycle and pipeline is that pipeline has 5 stages
-	(IF -> ID -> EXE -> DM -> WB) in each cycle, which is faster but more complicated.
-	 	This pipelined MIPS simulator is a simpler version than the real one.
+	 	This CMP MIPS simulator is a simpler version than the real one.
 	We simulate some MIPS instructions (all 32-bit) on this simulator including following opcodes:
 	 1. R-type: 
 	 	"add", "sub", "and", "or", "xor", "nor", "nand", "slt",
@@ -48,24 +47,11 @@ INTRODUCTION
 	 4. S-type:
 	 	"halt".
 	 Note that we don't simulate ALL MIPS instructions, just all above.
-	 (No floating point instructions, no "sltiu", and so forth.)
+	 (No floating point instructions, no "sltiu", and so on.)
 
-	 We realized some technique on this one, including:
-	  1. Stall detection
-	  2. Forwarding (or bypassing) detection
-	  3. flush detection
-	 But no branch prediction.
-
-	 We also handle some errors including following:
-	  1. Binary files cannot be read in. (terminate)
-	  2. Cannot allocate dynamic memory. (terminate)
-	  3. Write $0 error in cycle. 
-	  	 (skip this cycle and continue to simulate)
-	  4. Number overflow in cycle.
-	     (Still simulate)
-	  5. D/I-Memory address overflow in cycle. (terminate)
-	  6. D/I-Memory misalignment error in cycle. (terminate)
-	 If any one of all above errors occur we will warn you. (1~2 on screen, 3~6 in error_dump.rpt)
+	 	Note that this simulator supposed not to handle error. 
+	 If any error occurs, it will be printed on screen,
+	 but the number of hits and misses may be wrong.
 
 USING METHOD
 ============
@@ -78,15 +64,17 @@ USING METHOD
 	% tar zxvf archi01.tar.gz
 	% cd archi01/simulator
 	% make
-	% ./pipeline
-	(or "%./pipeline.exe" in some environments like Windows)
+	% ./CMP
+	(or "%./CMP.exe" in some environments)
 
-	and it will generate "snapshot.rpt" and  "error_dump.rpt".
-	Note that you should have the "dimage.bin" and "iimage.bin" in the same directory as your "pipeline".
+	and it will generate "snapshot.rpt" and  "report.rpt".
+	Note that you should have the "dimage.bin" and "iimage.bin" in the same directory as your "CMP".
 
-		There are some test cases in the folder "testcase" you can try.
-	 	You can type "diff snapshot.rpt ~/Correct/snapshot.rpt" to see if 
-	they are identical. (where "~/Correct/snapshot.rpt" is the path of the correct result simulated by TAs golden simulator) 
+		There are some test cases in the folder "open_testcase" tou can try.
+	 	You can type "diff snapshot.rpt ~/open_testcase/exampleX/snapshot.rpt" and 
+	"diff report.rpt ~/open_testcase/exampleX/report.rpt" to see if they are identical. (where 'X' is the number between 1~3) 
+	
+	Note: If you want to see every words in hex IR, I have put the testing "fprintf" or "printf" in some the functions in .c file, you can use it just by deleting the comment notation "/*" "*/", and then you can compare it if it's your ideal result.
 
 INPUT FORMAT
 ============
@@ -103,14 +91,13 @@ INPUT FORMAT
 				the starting address of PC (4 Bytes) --> 
 				the amount of words of following instructions (4 Bytes) --> 
 				the body of instructions (n bytes)
-	 
+
 OUTPUT FORMAT
 ============
 	
 	snapshot.rpt:
 
-		Show the state of registers after last cycle be done and what the next instruction will be execute 
-	in every stages of every cycle.
+		Show the state of registers after last cycle be done of every cycle.
 
 	e.g.
 					cycle 44
@@ -147,21 +134,36 @@ OUTPUT FORMAT
 					$30: 0x00000000
 					$31: 0x00000000
 					PC: 0x000000A8
-					IF: 0x214A0007 to_be_flushed
-					ID: BNE fwd_EX-DM_rt_$10
-					EX: SLL fwd_DM-WB_rt_$11
-					DM: AND
-					WB: ADDI
 
-	error_dump.rpt:
+	report.rpt:
 
-		Show the errors found in every cycle.
+		Enumerate the numbers of ICache, DCache, ITLB, DTLB, IPTE, DPTE hits and misses.
 
 	e.g.
-					Write $0 error in cycle: 353
-					Address overflow in cycle: 353
-					Misalignment error in cycle: 353
-					Number overflow in cycle: 353
+					ICache :
+					# hits: 21
+					# misses: 25
+
+					DCache :
+					# hits: 2
+					# misses: 10
+
+					ITLB :
+					# hits: 38
+					# misses: 8
+
+					DTLB :
+					# hits: 10
+					# misses: 2
+
+					IPageTable :
+					# hits: 0
+					# misses: 8
+
+					DPageTable :
+					# hits: 0
+					# misses: 2
+	 
 
 BUGS
 ====
@@ -187,10 +189,10 @@ FAQs
 	 A: You should have some related compiler tools in your system first, like gcc. (GNU C compiler). Also, you should have had "make" utility in your environment.
 	
 	Q: Why I typed "./a.out" or "./a.exe" but it shows me an error?
-	 A: We generate the executable file that names "pipeline", so you should key in "pipeline" instead of "./a.out" or "./a.exe".
+	 A: We generate the executable file that names "CMP", so you should key in "CMP" instead of "./a.out" or "./a.exe".
 	
-	Q: Why I typed "pipeline" but still have error?
-	 A: You may try to type "./pipeline".
+	Q: Why I typed "CMP" but still have error?
+	 A: You may try to type "./CMP".
 	
 	Q: Why I typed "cat" to see "dimage.bin" and "iimage.bin" but what I see is a garbled text?
 	 A: It's normal, since ".bin" file contains binary data, 
@@ -222,5 +224,4 @@ CHANGELOG
 TODO
 ====
 
-	Make a simple MIPS simulator with virtual memory implementation.
-	(additional L1 cache, PTE, TLB, and hard drive)
+	Simplify this code.

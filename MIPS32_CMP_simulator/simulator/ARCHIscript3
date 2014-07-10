@@ -1,0 +1,57 @@
+#!/bin/bash
+echo Start!
+#cd ..
+#rm -rf open_testcase
+#tar zxvf open_testcase.tar.gz
+#tar zxvf hidden_testcase.tar.gz
+#tar zxvf student_rpt.tar.gz
+#cd simulator
+make clean
+make
+rm *.rpt *.bin
+echo 1.example1
+cp  ../open_testcase/example1/iimage.bin .
+cp  ../open_testcase/example1/dimage.bin .
+./CMP 64 32 8 16 16 4 2 16 4 1
+#(2)32 16 16 4 512 128 1 32 8 2
+#(1)64 32 8 16 16 4 2 16 4 1
+mv report.rpt example1.rpt
+#diff snapshot.rpt ../open_testcase/example1/snapshot.rpt
+#diff report.rpt ../open_testcase/example1/report.rpt
+echo ...end
+echo 2.example2
+cp  ../open_testcase/example2/iimage.bin .
+cp  ../open_testcase/example2/dimage.bin .
+./CMP 64 32 8 16 16 4 2 16 4 1
+#64 32 8 16 16 4 2 16 4 1
+mv report.rpt example2.rpt
+#diff snapshot.rpt ../open_testcase/example2/snapshot.rpt
+#diff report.rpt ../open_testcase/example2/report.rpt
+echo ...end
+echo 3.example3
+cp  ../open_testcase/example3/iimage.bin .
+cp  ../open_testcase/example3/dimage.bin .
+./CMP 64 32 8 16 16 4 2 16 4 1
+#64 32 8 16 16 4 2 16 4 1
+mv report.rpt example3.rpt
+#diff snapshot.rpt ../open_testcase/example3/snapshot.rpt
+#diff report.rpt ../open_testcase/example3/report.rpt
+echo ...end
+echo 4.testcase
+cp  ../testcase/iimage.bin .
+cp  ../testcase/dimage.bin .
+./CMP
+#64 32 8 16 16 4 2 16 4 1
+mv report.rpt ../testcase/.
+mv snapshot.rpt ../testcase/.
+#diff snapshot.rpt ../open_testcase/example3/snapshot.rpt
+#diff report.rpt ../open_testcase/example3/report.rpt
+#echo ...end
+
+make clean
+rm  *.bin
+cd ..
+#rm -rf open_testcase
+#rm -rf hidden_testcase
+#rm -rf student_rpt
+echo Done!
