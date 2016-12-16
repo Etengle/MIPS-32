@@ -5,10 +5,6 @@
 	Double major: 	Department of Computer Science
 	Student ID: 	101021120 
 	Name: 			Yu Xiang, Zheng
-	Nickname: 		Slighten
-	E-mail: 		zz687@yahoo.com.tw
-	FB: 			https://www.facebook.com/Slighten.Zheng
-	Cellphone: 		0923576510
  *
  * Filename: Simple_MIPS_assembler.c
  * Status: 
